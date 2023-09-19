@@ -1,0 +1,794 @@
+{
+	"info": {
+		"_postman_id": "28c8c4f2-14a1-454b-b99b-f1fbd7cd0458",
+		"name": "Coursework",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "24945270"
+	},
+	"item": [
+		{
+			"name": "Создание персонального события с валидными данными в будущем на кирилице",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var key = \"id1\"\r",
+							"var value = pm.response.json().data.payload.id \r",
+							"\r",
+							"pm.collectionVariables.set(key, value)\r",
+							"\r",
+							"var key = \"startAt\"\r",
+							"var value = pm.response.json().data.startAt\r",
+							"\r",
+							"pm.collectionVariables.set(key, value)\r",
+							"\r",
+							"var key = \"oldStart\"\r",
+							"var value = pm.response.json().data.startAt\r",
+							"\r",
+							"pm.collectionVariables.set(key, value)\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.sendRequest(\"https://postman-echo.com/get\", function (err, response) {\r",
+							"    console.log(response.json());\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "User-Agent",
+						"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Safari/537.36",
+						"type": "text"
+					},
+					{
+						"key": "Sec-Fetch-Dest",
+						"value": "empty",
+						"type": "text"
+					},
+					{
+						"key": "Sec-Fetch--mode",
+						"value": "cors",
+						"type": "text"
+					},
+					{
+						"key": "Sec-Fetch-Site",
+						"value": "same-site",
+						"type": "text"
+					},
+					{
+						"key": "Cookie",
+						"value": "token_global={{Token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"backgroundColor\": \"grey\",\r\n    \"color\": \"green\",\r\n    \"description\": \"анастасияЯнкаускайте\",\r\n    \"title\": \"Турмалине\",\r\n    \"startAt\": \"2023-01-30T14:30:00+03:00\",\r\n    \"endAt\": 2023-01-30T15: 00: 00+03: 00\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/v2/schedule/createPersonal",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"v2",
+						"schedule",
+						"createPersonal"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Получение рассписание",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Cookie",
+						"value": "token_global={{Token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"from\": \"2023-01-30T14:30:00+03:00\",\r\n    \"till\":\"2023-02-25T00:00:00+03:00\",\r\n    \"onlyTypes\":[]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/v2/schedule/events",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"v2",
+						"schedule",
+						"events"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Редактирование персонального события",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Cookie",
+						"value": "token_global={{Token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"backgroundColor\": \"grey\",\r\n    \"color\": \"green\",\r\n    \"description\": \"анастасияЯнкаускайте\",\r\n    \"title\": \"Турмалине\",\r\n    \"startAt\": \"{{startAt}}\",\r\n    \"endAt\": \"2023-01-30T15:00:00+03:00\",\r\n    \"id\":\"{{id1}}\",\r\n    \"oldStart\":\"{{oldStart}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/v2/schedule/updatePersonal",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"v2",
+						"schedule",
+						"updatePersonal"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Удаление события из настоящего",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Cookie",
+						"value": "Token={{Token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": \"{{id1}}\",\r\n    \"startAt\":\"{{startAt}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/v2/schedule/removePersonal",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"v2",
+						"schedule",
+						"removePersonal"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Создание персонального события на латинице",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var key = \"id2\"\r",
+							"var value = pm.response.json().data.payload.id \r",
+							"\r",
+							"pm.collectionVariables.set(key, value)\r",
+							"\r",
+							"var key = \"startAt\"\r",
+							"var value = pm.response.json().data.startAt\r",
+							"\r",
+							"pm.collectionVariables.set(key, value)\r",
+							"\r",
+							"var key = \"oldStart\"\r",
+							"var value = pm.response.json().data.startAt\r",
+							"\r",
+							"pm.collectionVariables.set(key, value)\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Cookie",
+						"value": "token={{Token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"backgroundColor\": \"grey\",\r\n    \"color\": \"green\",\r\n    \"description\": \"anastasijaJank\",\r\n    \"title\": \"turmaline\",\r\n    \"startAt\": \"2023-01-30T14:30:00+03:00\",\r\n    \"endAt\": 2023-01-30T15:00:00+03:00\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/v2/schedule/createPersonal",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"v2",
+						"schedule",
+						"createPersonal"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Получение рассписание",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Cookie",
+						"value": "token_global={{Token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"from\": \"2023-01-30T14:30:00+03:00\",\r\n    \"till\":\"2023-02-25T00:00:00+03:00\",\r\n    \"onlyTypes\":[]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/v2/schedule/events",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"v2",
+						"schedule",
+						"events"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Редактирование личное событие при изменении всех данных",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Cookie",
+						"value": "token_globa={{Token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"backgroundColor\": \"grey\",\r\n    \"color\": \"yellow\",\r\n    \"description\": \"anastasijaJankauskaite\",\r\n    \"title\": \"Turmaline3\",\r\n    \"startAt\": \"{{startAt}}\",\r\n    \"endAt\": \"2023-01-20T15:00:00+03:00\",\r\n    \"id\":\"{{id2}}\",\r\n    \"oldStart\":\"{{oldStart}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/v2/schedule/updatePersonal",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"v2",
+						"schedule",
+						"updatePersonal"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Удаление событие из прошлого",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Cookie",
+						"value": "token_global={{Token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": \"{{id2}}\",\r\n    \"startAt\":\"{{startAt}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/v2/schedule/removePersonal",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"v2",
+						"schedule",
+						"removePersonal"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Создание персонального события с невалиднами знаками",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var key = \"id3\"\r",
+							"var value = pm.response.json().data.payload.id \r",
+							"\r",
+							"pm.collectionVariables.set(key, value)\r",
+							"\r",
+							"var key = \"startAt\"\r",
+							"var value = pm.response.json().data.startAt\r",
+							"\r",
+							"pm.collectionVariables.set(key, value)\r",
+							"\r",
+							"var key = \"oldStart\"\r",
+							"var value = pm.response.json().data.startAt\r",
+							"\r",
+							"pm.collectionVariables.set(key, value)\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Cookie",
+						"value": "token_globa={{Token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"backgroundColor\": \"grey\",\r\n    \"color\": \"green\",\r\n    \"description\": \"\",\r\n    \"title\": \"t1u2r1m2a2line\",\r\n    \"startAt\": \"2023-01-30T14:30:00+03:00\",\r\n    \"endAt\": 2023-01-30T15:00:00+03:00\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/v2/schedule/createPersonal",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"v2",
+						"schedule",
+						"createPersonal"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Получение рассписание",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Cookie",
+						"value": "token_global={{Token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"from\": \"2023-01-30T14:30:00+03:00\",\r\n    \"till\":\"2023-02-25T00:00:00+03:00\",\r\n    \"onlyTypes\":[]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/v2/schedule/events",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"v2",
+						"schedule",
+						"events"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Редактирование персонального события на год в перед",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Cookie",
+						"value": "token_globa={{Token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"backgroundColor\": \"grey\",\r\n    \"color\": \"green\",\r\n    \"description\": \"\",\r\n    \"title\": \"t1u2r1m2a2line\",\r\n    \"startAt\": \"2024-01-30T14:30:00+03:00\",\r\n    \"endAt\": 2024-01-30T15:00:00+03:00\"\r\n        \"id\":\"{{id3}}\",\r\n    \"oldStart\":\"{{oldStart}}\"\r\n}\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/v2/schedule/updatePersonal",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"v2",
+						"schedule",
+						"updatePersonal"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Удаление событие из будущего",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Cookie",
+						"value": "token_global={{Token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": \"{{id3}}\",\r\n    \"startAt\":\"{{startAt}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/v2/schedule/removePersonal",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"v2",
+						"schedule",
+						"removePersonal"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Создание ПС на будущие",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var key = \"id4\"\r",
+							"var value = pm.response.json().data.payload.id \r",
+							"\r",
+							"pm.collectionVariables.set(key, value)\r",
+							"\r",
+							"var key = \"startAt\"\r",
+							"var value = pm.response.json().data.startAt\r",
+							"\r",
+							"pm.collectionVariables.set(key, value)\r",
+							"\r",
+							"var key = \"oldStart\"\r",
+							"var value = pm.response.json().data.startAt\r",
+							"\r",
+							"pm.collectionVariables.set(key, value)\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Cookie",
+						"value": "token_globas={{Token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"backgroundColor\": \"grey\",\r\n    \"color\": \"green\",\r\n    \"description\": \"анастасияЯнкаускайте\",\r\n    \"title\": \"Турмалине\",\r\n    \"startAt\": \"2023-02-15T14:30:00+03:00\",\r\n    \"endAt\": \"2023-02-15T15:00:00+03:00\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/v2/schedule/createPersonal",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"v2",
+						"schedule",
+						"createPersonal"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Получение расписание",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Cookie",
+						"value": "token_global={{Token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"from\": \"2023-02-15T14:30:00+03:00\",\r\n    \"till\":\"2023-02-15T00:00:00+03:00\",\r\n    \"onlyTypes\":[]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/v2/schedule/events",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"v2",
+						"schedule",
+						"events"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Редактирование ПС перенося дату событие на раньше",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Cookie",
+						"value": "token_global={{Token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"backgroundColor\": \"grey\",\r\n    \"color\": \"green\",\r\n    \"description\": \"анастасияЯнкаускайте\",\r\n    \"title\": \"Турмалине\",\r\n    \"startAt\": \"{{startAt}}\",\r\n    \"endAt\": \"2023-01-30T15:00:00+03:00\",\r\n    \"id\":\"{{id4}}\",\r\n    \"oldStart\":\"{{oldStart}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/v2/schedule/updatePersonal",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"v2",
+						"schedule",
+						"updatePersonal"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Удаление",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Cookie",
+						"value": "token_global={{Token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": \"{{id4}}\",\r\n    \"startAt\":\"{{startAt}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/v2/schedule/removePersonal",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"v2",
+						"schedule",
+						"removePersonal"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{Token}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseURL",
+			"value": "https://api-teachers.skyeng.ru",
+			"type": "string"
+		},
+		{
+			"key": "Token",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "startAt",
+			"value": "2023-01-30T15:00:00+03:00",
+			"type": "string"
+		},
+		{
+			"key": "oldStart",
+			"value": "2023-01-30T15:00:00+03:00",
+			"type": "string"
+		},
+		{
+			"key": "eventId",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "id1",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "id2",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "id3",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "id4",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "id5",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "startAt2",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "endAt",
+			"value": "",
+			"type": "string"
+		}
+	]
+}
