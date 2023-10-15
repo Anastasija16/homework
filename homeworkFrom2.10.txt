@@ -1,0 +1,14 @@
+   0 mkdir home
+   1 mkdir -p /home/user/start/
+   2 touch /home/user/start/1.txt
+   3 echo "Start" /home/user/start/1.txt
+   4 date >> /home/user/start/1.txt
+   5 mkdir -p /opt/task/
+   6 touch /opt/task/start.txt
+   7 cp /home/user/start/1.txt /opt/task/start.txt
+   8 ls -a / | tail -n -4
+   9 ls -a / | tail -4 >> /opt/task/start.txt
+  10 df -h | grep /
+  11 df -h | grep G >> /opt/task/start.txt
+  12 history
+  13 history > homeworkFrom2.10.txt
